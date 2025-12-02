@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kaojino THBC Exchange</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Web3 / Ethers (เลือกใช้ทีหลังได้) -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.4/dist/web3.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-wrap">
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="brand">
+        <!-- วางโลโก้ THBC แบบ PNG ใส่แทน src นี้ทีหลังได้ -->
+        <!-- <img src="thbc-logo.png" alt="THBC" class="logo" /> -->
+        <div class="brand-text">
+          <div class="brand-title" data-i18n="app_title">Kaojino THBC Exchange</div>
+          <div class="brand-sub" data-i18n="app_tagline">Utility gateway for THBC, KJC and CAT</div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="lang-switch">
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="th">TH</button>
+        </div>
+        <button id="btnConnect" class="btn primary">
+          <span data-i18n="connect_wallet">Connect Wallet</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="index.html" class="nav-link active" data-i18n="nav_buy_thbc">Buy THBC</a>
+      <a href="kjc.html" class="nav-link" data-i18n="nav_kjc_packages">KJC Packages</a>
+      <a href="cat.html" class="nav-link" data-i18n="nav_cat_packages">CAT Packages</a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+      <!-- Wallet status -->
+      <section class="card">
+        <h2 data-i18n="wallet_status_title">Wallet Status</h2>
+        <div class="wallet-row">
+          <div class="label" data-i18n="wallet_address">Address</div>
+          <div id="walletAddress" class="value mono muted">Not connected</div>
+        </div>
+        <div class="wallet-grid">
+          <div class="wallet-box">
+            <div class="label">USDT</div>
+            <div id="balanceUSDT" class="value mono">-</div>
+          </div>
+          <div class="wallet-box">
+            <div class="label">THBC</div>
+            <div id="balanceTHBC" class="value mono">-</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUY THBC -->
+      <section class="card">
+        <h2 data-i18n="buy_thbc_title">Buy THBC with USDT</h2>
+        <p class="muted" data-i18n="buy_thbc_desc">
+          Enter the amount of USDT you want to spend. The system will calculate how much THBC
+          you will receive at the fixed rate.
+        </p>
+
+        <div class="rate-box">
+          <span data-i18n="current_rate">Current rate</span>:
+          <span id="rateDisplay" class="mono">1 USDT = 35 THBC</span>
+        </div>
+
+        <div class="form-row">
+          <label for="inputUsdt" data-i18n="label_usdt_amount">USDT amount</label>
+          <input
+            id="inputUsdt"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+          />
+        </div>
+
+        <div class="form-row">
+          <label data-i18n="label_thbc_receive">You will receive (THBC)</label>
+          <div id="thbcPreview" class="value mono big">0.00</div>
+        </div>
+
+        <div class="btn-row">
+          <button id="btnApproveUSDT" class="btn secondary">
+            <span data-i18n="btn_approve_usdt">Approve USDT</span>
+          </button>
+          <button id="btnBuyTHBC" class="btn primary">
+            <span data-i18n="btn_buy_thbc">Buy THBC</span>
+          </button>
+        </div>
+
+        <div id="txStatus" class="status-line muted"></div>
+      </section>
+
+      <!-- REFERRAL SECTION (แค่โครงไว้ก่อน) -->
+      <section class="card">
+        <h2 data-i18n="ref_title">Referral</h2>
+        <p class="muted" data-i18n="ref_desc">
+          Share your referral link and earn a 3-level commission (10% / 3% / 2%) from your
+          referrals' USDT purchases.
+        </p>
+
+        <div class="form-row">
+          <label data-i18n="ref_link_label">Your referral link</label>
+          <div class="ref-row">
+            <input id="refLink" type="text" readonly />
+            <button id="btnCopyRef" class="btn ghost" data-i18n="btn_copy">Copy</button>
+          </div>
+        </div>
+
+        <div class="wallet-grid">
+          <div class="wallet-box">
+            <div class="label" data-i18n="ref_total_commission">Total commission (USDT)</div>
+            <div id="refTotal" class="value mono">-</div>
+          </div>
+          <div class="wallet-box">
+            <div class="label" data-i18n="ref_pending">Pending to claim</div>
+            <div id="refPending" class="value mono">-</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button id="btnClaimRef" class="btn secondary">
+            <span data-i18n="btn_claim_ref">Claim Referral Rewards</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span class="muted">&copy; <span id="year"></span> Kaojino THBC Exchange</span>
+    </footer>
+  </div>
+</body>
+</html>
